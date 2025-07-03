@@ -1,0 +1,104 @@
+{% extends "index.html" %} {% load static %} {% block title %}Home | Venus
+Attendance System{% endblock %} {% block head %}
+<style>
+  /* Welcome Section Theme Styles */
+  .welcome-section {
+    padding: 5rem 1rem;
+    transition: background-color 0.5s, color 0.5s;
+    min-height: 90vh;
+  }
+
+  body.theme-light .welcome-section {
+    background-color:rgb(0, 0, 0);
+    color: #212529;
+  }
+
+  body.theme-dark .welcome-section {
+    background-color:rgb(255, 255, 255);
+    color:rgb(255, 255, 255);
+  }
+
+  body.theme-navy .welcome-section {
+    background-color:rgb(255, 255, 255);
+    color:rgb(255, 255, 255);
+  }
+
+  .welcome-section .btn {
+    margin: 0.5rem;
+  }
+</style>
+{% endblock %} {% block body %}
+<section class="welcome-section text-center">
+  <div class="container">
+    <img
+      src="{% static 'logo2.jpg' %}"
+      alt="Venus Logo"
+      class="img-fluid mb-4 shadow-sm rounded-circle"
+      style="width: 120px; border: 3px solid #dee2e6"
+    />
+
+    <h1 class="display-5 fw-bold">
+      Welcome to <span class="text-primary">Venus Attendance System</span>
+    </h1>
+
+    <p class="lead mt-3">
+      A smart, secure, and efficient way to manage your daily attendance using
+      <strong>QR Code Scanning</strong> and
+      <strong>Geo-Location</strong> tracking.
+    </p>
+
+    <div class="mt-4">
+      <a
+        href="{% url 'attendance' %}"
+        class="btn btn-primary btn-lg shadow me-2"
+      >
+        <i class="fas fa-qrcode me-1"></i> Mark Attendance
+      </a>
+      <a
+        href="{% url 'attendance_history' %}"
+        id="historyBtn"
+        class="btn btn-primary btn-lg shadow"
+      >
+        <i class="fas fa-calendar-alt me-1"></i> View History
+      </a>
+    </div>
+  </div>
+</section>
+{% endblock %} {% block script %}
+
+<script>
+  function setTheme(theme) {
+    document.body.classList.remove("theme-light", "theme-dark", "theme-navy");
+    document.body.classList.add("theme-" + theme);
+    localStorage.setItem("theme", theme);
+    updateButtonStyle(theme);
+  }
+
+  function updateButtonStyle(theme) {
+    const historyBtn = document.getElementById("historyBtn");
+    if (!historyBtn) return;
+
+    // Remove any old classes
+    historyBtn.classList.remove(
+      "btn-outline-light",
+      "btn-outline-secondary",
+      "btn-outline-info"
+    );
+
+    // Add new class based on theme
+    if (theme === "light") {
+      historyBtn.classList.add("btn-outline-secondary");
+    } else if (theme === "dark") {
+      historyBtn.classList.add("btn-outline-light");
+    } else if (theme === "navy") {
+      historyBtn.classList.add("btn-outline-info");
+    }
+  }
+
+  // On page load
+  const savedTheme = localStorage.getItem("theme") || "light";
+  document.body.classList.add("theme-" + savedTheme);
+  updateButtonStyle(savedTheme);
+</script>
+
+{% endblock %}

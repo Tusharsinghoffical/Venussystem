@@ -1,0 +1,31 @@
+{% extends "index.html" %} {% block title %}Attendance | Venus System
+{% endblock title %} {% load static %} {% block body %}
+
+
+<h2>📊 Attendance Summary Report</h2>
+
+<h4>Weekly Report</h4>
+<ul>
+  {% for w in weekly %}
+    <li>Week of {{ w.week|date:"M d, Y" }} — {{ w.total }} entries</li>
+  {% endfor %}
+</ul>
+
+<h4>Monthly Report</h4>
+<ul>
+  {% for m in monthly %}
+    <li>{{ m.month|date:"F Y" }} — {{ m.total }} entries</li>
+  {% endfor %}
+</ul>
+
+<h4>Yearly Report</h4>
+<ul>
+  {% for y in yearly %}
+    <li>{{ y.year|date:"Y" }} — {{ y.total }} entries</li>
+  {% endfor %}
+</ul>
+
+
+
+
+{% endblock body %}
